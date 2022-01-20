@@ -51,6 +51,7 @@ export default function Signup() {
     }
   }, [flagLogin, navigate, alert]);
 
+  //funcion de envio de datos para registro usuario
   const submitsignUp = () => {
     dispatch(signupAction({ username, email, password }));
   };
