@@ -1,27 +1,28 @@
 import axios from "axios";
-export const SAVE_WORD = "SAVE_WORD";
+export const SEARCH_TEXT = "SEARCH_TEXT";
 
 /**
- * Action redux para llamada de api
+ * Action redux para llamada de api para busqueda de texto
+ * user ifon que es el token puede mejorarse
  */
-export function validText(text) {
-  const url = "http://localhost:8000/iecho";
 
+export function searchText({ textSearch, userInfo }) {
+  const url = "http://localhost:8000/api/search";
   return async (dispatch) => {
     try {
-      //llamamos al api
-      const res = await axios.get(url, { params: { text } });
-
-      //activamos un dispatch para envio a reducer
-      dispatch({
-        type: SAVE_WORD,
-        payload: {
-          word: res.data.text,
-          palindrome: res.data.palindrome,
+      const result = await axios.get(url, {
+        params: { search: textSearch },
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
         },
       });
+
+      dispatch({
+        type: SEARCH_TEXT,
+        payload: result.data,
+      });
     } catch (error) {
-      return { valid: false };
+      console.log(error);
     }
   };
 }

@@ -1,16 +1,18 @@
 import * as Action from "../actions";
 //estado inicial de nuestro reducer
 const initialState = {
-  words: [],
+  searchResults: [],
 };
 
 //creamos nuesto reducer
 const validTxtReducer = function (state = initialState, action) {
   switch (action.type) {
-    case Action.SAVE_WORD: {
+    case Action.SEARCH_TEXT: {
+      //resultados de busqueda en youtube
+      const { items } = action.payload;
       return {
         ...state,
-        words: [...state.words, action.payload],
+        searchResults: items,
       };
     }
     default: {
